@@ -1,0 +1,203 @@
+#!/bin/bash
+# read -e-menu: a menu driven system information program
+# Written by Vlad Stanoiu
+# Case 4 - VPN - you can modify and add whatever VPN you are using mostly
+# Case 9 - add a proxy list if you use
+
+
+clear;
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+BLUE='\033[0;34m'
+GRAY='\033[0;37m'
+WHITE='\033[1;37m'
+ORANGE='\033[0;33m'
+BWhite='\033[3;97m'
+CYAN='\033[0;36m'
+PURPLE='\033[0;35m'
+
+while : ; do
+	printf "\n"
+	echo -e "${NC}-------------------------------------------${NC}"
+	printf "|${GREEN}                                         |";printf "\n"
+	echo -e "|${BWhite}   Welcome to System Maintenance Script${NC}  |"
+	printf "|                                         |"
+	printf "\n${GREEN}---------------------${NC}"
+	echo -e "${NC}----------------------"
+    echo -e "|${CYAN} 1.  System information${NC}                  |"
+    echo -e "|${CYAN} 2.  User info & groups${NC}                  |" 
+    echo -e "|${CYAN} 3.  Update Packages${NC}                     |" 
+    echo -e "|${CYAN} 4.  VPN's${NC}                               |"   
+    echo -e "|${CYAN} 5.  Login as root${NC}                       |"
+    echo -e "|${CYAN} 6.  Login as normal user${NC}                |"
+    echo -e "|${CYAN} 7.  Ifconfig & Public IP${NC}                |"
+    echo -e "|${CYAN} 8.  Upgrade System ${NC}                     |"
+    echo -e "|${CYAN} 9.  Proxy List${NC}                          |"
+    echo -e "|${CYAN} 10. Stay Anonymous${NC}                      |"
+    echo -e "-------------------------------------------"
+    echo -e "|${ORANGE} 11. Hunting Script     ${NC}                 |"
+    echo -e "-------------------------------------------"
+    echo -e "|${YELLOW} 0.  Quit${NC}                                |"
+    echo -e "-------------------------------------------"
+    echo -n -e "${RED}Enter selection [0-12]: ${WHITE}";
+	read -e -r input
+	printf "\n";clear;
+    case $input in
+        1) 
+			while : ; do
+				printf "${WHITE}Choose an option:${NC}\n\n" 
+				echo -e "${CYAN}1. Display System Information${NC}"
+				echo -e "${CYAN}2. Display Disk Space${NC}"
+				echo -e "${CYAN}3. Display Home Space Utilization${NC}"
+				echo -e "${YELLOW}0. Back${NC}"
+				echo -n -e "${RED}Enter selection [0-3]: ${NC}"
+				printf "${WHITE}";read -e -r systeminfo
+				printf "\n"
+
+				case $systeminfo in 
+					1) clear;printf ${RED}"Hostname: ${WHITE}, $HOSTNAME,${RED}"; uptime; printf "${NC}";;
+					2) clear;echo -e "${RED}";sudo df -h;printf "${NC}" ;;
+					3) clear;
+						if [ "$UID" = 0 ]; then
+							echo -e "${WHITE}Home Space Utilization ${RED}(All Users)"
+							echo -e "${RED}";du -sh /home/*;printf "${NC}"
+						else
+							echo -e "${WHITE}Home Space Utilization ${RED}($USER)"
+							echo -e "${RED}";du -sh "$HOME";printf "${NC}"
+						fi
+					;;
+					0) clear;break;;				
+				esac
+				printf "\n"
+			done;; 
+
+		2) clear; printf ${ORANGE};whoami; printf "\n" & groups;printf "${NC}";printf "\n";;
+
+		3) clear;sudo apt update;printf "${GRAY}Packages updated.${NC}"; printf "\n\n";;
+
+		4)  clear;
+			while : ; do
+				printf "${WHITE}Choose a VPN:${NC}\n\n"
+				echo -e "${CYAN}1. FortiClient${NC}"
+				echo -e "${CYAN}2. OpenVPN${NC}"
+				echo -e "${YELLOW}0. Back${NC}"
+				echo -n -e "${RED}Enter selection [0-2]: ${NC}"
+				printf "${WHITE}";read -e -r vpns;
+				printf "\n";
+
+				case $vpns in
+
+					1) 
+					   while : ; do
+					   		printf "${WHITE}FortiClient VPN:${NC}\n\n"
+					   		echo -e "${CYAN}1. Start ${NC}"
+					   		echo -e "${CYAN}2. Stop ${NC}"
+					   		echo -e "${CYAN}3. Status ${NC}"
+					   		echo -e "${CYAN}4. Internal IP ${NC}"
+					   		echo -e "${YELLOW}0. Back${NC}"
+							echo -n -e "${RED}Enter selection [0-4]: ${NC}"
+							printf "${WHITE}";read -e -r forti
+							printf "\n"
+
+							case $forti in
+								1)clear;terminator -T "Forti" -e "/opt/forticlient/gui/FortiClient-linux-x64/FortiClient";;
+								2)clear;sudo systemctl stop forticlient;printf "\n";;
+								3)clear;sudo systemctl status forticlient;printf "\n";;
+								4)clear;printf "\n";printf ${PURPLE};ifconfig | grep inet;printf "\n";;
+								0)clear;break;;
+							esac
+						done;;
+
+					2) 
+					   while : ; do
+					   		printf "${WHITE}OPEN VPN - Select a connection${NC}\n\n"
+							echo -e "${CYAN}1. Timisoara ${NC}"
+					   		echo -e "${CYAN}2. Constanta ${NC}"
+					   		echo -e "${CYAN}3. HTB ${NC}"
+					   		echo -e "${CYAN}4. HTB Dedicated Labs Atos ${NC}"	
+					   		echo -e "${CYAN}5. HTB RastaLabs ${NC}"
+					   		echo -e "${CYAN}6. TryHackMe ${NC}"
+					   		echo -e "${CYAN}7. Internal IP ${NC}"
+					   		echo -e "${CYAN}8. Stop OVPN ${NC}"
+					   		echo -e "${YELLOW}0. Back${NC}"
+							echo -n -e "${RED}Enter selection [0-7]: ${NC}"
+							printf ${WHITE};read -e -r openvpn;
+							printf "\n"
+
+							case $openvpn in
+								1)clear;terminator -e "sudo openvpn /home/$USER/VPNs/homeTimi.ovpn";;  #add a path to your OPENVPN files inside " "
+								2)clear;terminator -e "sudo openvpn /home/$USER/VPNs/homeVPN.ovpn";;
+								3)clear;terminator -e "sudo openvpn /home/$USER/VPNs/blackito.ovpn";;
+								4)clear;terminator -e "sudo openvpn /home/$USER/VPNs/Dedicated_Lab_atos.ovpn";;
+								5)clear;terminator -e "sudo openvpn /home/$USER/VPNs/RastaLabs_atos.ovpn";;
+								6)clear;terminator -e "sudo openvpn /home/$USER/VPNs/trychackme.ovpn";;
+								7)clear;printf "\n";printf ${PURPLE};ifconfig | grep inet;printf "\n";;
+								8)clear;printf "\n";sudo killall openvpn;;
+								0)clear;break;;
+							esac
+						done;;
+
+					0)clear;break;;	
+
+				esac	
+
+			done;;
+
+		5) sudo su;;
+
+		6) echo "Enter your username:"
+			printf "${CYAN}";read -e username
+			su $username;;
+
+		7)clear;printf "\n";printf ${YELLOW};ifconfig | grep inet;printf "\n";curl ifconfig.me;printf "\n";;
+
+		8)clear;
+			while : ; do 
+				printf "${WHITE}Choose an option:${NC}\n\n" 
+				echo -e "${CYAN}1. Full-dist upgrade${NC}"
+				echo -e "${CYAN}2. Full upgrade${NC}"
+				echo -e "${YELLOW}0. Back"
+				echo -n -e "${RED}Enter selection [0-2]: "
+				printf "${WHITE}";read -e -r upgrd
+
+				case $upgrd in 
+					1) clear;sudo apt-get dist-upgrade -y;echo -e "\n${PURPLE}Dist upgrade completed.${NC}\n";;
+					2) clear;sudo apt full-upgrade;echo -e "\n${PURPLE}Full upgrade completed.${NC}\n";;
+					0) clear;break;;				
+				esac
+			done;;
+		9)clear;printf "${BWhite}Proxy List\n\n${NC}"
+			cat /home/$USER/Tools/Docs/proxylist.txt;;  # add a proxy list ( if you use )
+			
+		10)clear;
+		   while : ; do
+		   		echo -e "${GREEN}--------------------"
+		   		echo -e "${CYAN}1. Tor - Start${NC}"
+		   		echo -e "${CYAN}2. Tor - Stop${NC}"
+		   		echo -e "${CYAN}3. Tor - Status${NC}"
+		   		echo -e "${WHITE}--------------------"
+		   		echo -e "${CYAN}4. Chrome${NC}"
+		   		echo -e "${CYAN}5. Firefox${NC}"
+		   		echo -e "${WHITE}--------------------"
+		   		echo -e "${YELLOW}0. Back${NC}"
+		   		printf "\n"
+		   		echo -n -e "${RED}Enter selection [0-5]: "
+				printf "${WHITE}";read -e -r anon
+
+				case $anon in
+					1)clear; sudo service tor start;;
+					2)clear; sudo service tor stop;;
+					3)clear; sudo service tor status;;
+					4)clear; terminator -T "chrome" -e "proxychains google-chrome https://www.dnsleaktest.com/";;
+					5)clear; terminator -T "chrome" -e "proxychains firefox https://www.dnsleaktest.com/";;
+					0)clear;break;;	
+				esac
+		   	done;;
+		 11) /usr/local/bin/script.sh;;
+
+        0) exit
+		
+    esac
+done
+
