@@ -112,12 +112,12 @@ while : ; do
 					2) 
 					   while : ; do
 					   		printf "${WHITE}OPEN VPN - Select a connection${NC}\n\n"
-							echo -e "${CYAN}1. Timisoara ${NC}"
-					   		echo -e "${CYAN}2. Constanta ${NC}"
-					   		echo -e "${CYAN}3. HTB ${NC}"
-					   		echo -e "${CYAN}4. HTB Dedicated Labs Atos ${NC}"	
-					   		echo -e "${CYAN}5. HTB RastaLabs ${NC}"
-					   		echo -e "${CYAN}6. TryHackMe ${NC}"
+							echo -e "${CYAN}1. Name1 ${NC}" #edit those files or delete them
+					   		echo -e "${CYAN}2. Name2 ${NC}"
+					   		echo -e "${CYAN}3. Name3 ${NC}"
+					   		echo -e "${CYAN}4. Name4 ${NC}"	
+					   		echo -e "${CYAN}5. Name5 ${NC}"
+					   		echo -e "${CYAN}6. Name6 ${NC}"
 					   		echo -e "${CYAN}7. Internal IP ${NC}"
 					   		echo -e "${CYAN}8. Stop OVPN ${NC}"
 					   		echo -e "${YELLOW}0. Back${NC}"
@@ -126,12 +126,12 @@ while : ; do
 							printf "\n"
 
 							case $openvpn in
-								1)clear;terminator -e "sudo openvpn /home/$USER/VPNs/homeTimi.ovpn";;  #add a path to your OPENVPN files inside " "
-								2)clear;terminator -e "sudo openvpn /home/$USER/VPNs/homeVPN.ovpn";;
-								3)clear;terminator -e "sudo openvpn /home/$USER/VPNs/blackito.ovpn";;
-								4)clear;terminator -e "sudo openvpn /home/$USER/VPNs/Dedicated_Lab_atos.ovpn";;
-								5)clear;terminator -e "sudo openvpn /home/$USER/VPNs/RastaLabs_atos.ovpn";;
-								6)clear;terminator -e "sudo openvpn /home/$USER/VPNs/trychackme.ovpn";;
+								1)clear;terminator -e "sudo openvpn /home/$USER/example1.ovpn";;  #add a path to your OPENVPN files inside " "
+								2)clear;terminator -e "sudo openvpn /home/$USE/example2.ovpn";;
+								3)clear;terminator -e "sudo openvpn /home/$USER/example3.ovpn";;
+								4)clear;terminator -e "sudo openvpn /home/$USER/example4.ovpn";;
+								5)clear;terminator -e "sudo openvpn /home/$USER/example5.ovpn";;
+								6)clear;terminator -e "sudo openvpn /home/$USER/example6.ovpn";;
 								7)clear;printf "\n";printf ${PURPLE};ifconfig | grep inet;printf "\n";;
 								8)clear;printf "\n";sudo killall openvpn;;
 								0)clear;break;;
@@ -194,7 +194,7 @@ while : ; do
 					0)clear;break;;	
 				esac
 		   	done;;
-		 11) /usr/local/bin/script.sh;;
+		 11) /usr/local/bin/hunt;;
 
         0) exit
 		
