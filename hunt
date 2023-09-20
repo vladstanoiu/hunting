@@ -5366,7 +5366,7 @@ while : ;
 
 #menu
             17) 
-                /usr/local/bin/maintenance.sh;;
+                /usr/local/bin/maintenance;;
 
 #passwords  
             18)
