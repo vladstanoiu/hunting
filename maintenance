@@ -127,7 +127,7 @@ while : ; do
 
 							case $openvpn in
 								1)clear;terminator -e "sudo openvpn /home/$USER/example1.ovpn";;  #add a path to your OPENVPN files inside " "
-								2)clear;terminator -e "sudo openvpn /home/$USE/example2.ovpn";;
+								2)clear;terminator -e "sudo openvpn /home/$USER/example2.ovpn";;
 								3)clear;terminator -e "sudo openvpn /home/$USER/example3.ovpn";;
 								4)clear;terminator -e "sudo openvpn /home/$USER/example4.ovpn";;
 								5)clear;terminator -e "sudo openvpn /home/$USER/example5.ovpn";;
